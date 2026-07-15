@@ -24,3 +24,20 @@ A cloud-enabled REST API built using ASP.NET Core that allows users to save citi
 - AWS
 - OpenWeatherMap API
 - Swagger
+
+---
+
+## Project Structure
+
+```text
+WeatherAlertTracker.sln
+
+src/
+├── WeatherAlertTracker.API
+├── WeatherAlertTracker.Application
+├── WeatherAlertTracker.Domain
+└── WeatherAlertTracker.Infrastructure
+
+tests/
+└── WeatherAlertTracker.Tests
+```
