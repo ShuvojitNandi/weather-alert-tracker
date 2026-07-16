@@ -41,3 +41,36 @@ src/
 tests/
 └── WeatherAlertTracker.Tests
 ```
+
+---
+
+## Database Schema
+
+Cities
+------
+Id (Guid)
+Name
+Province
+Country
+Latitude
+Longitude
+CreatedAt
+
+Alerts
+------
+Id (Guid)
+CityId (FK)
+WeatherType
+Threshold
+IsActive
+Email
+CreatedAt
+
+---
+
+## Relationship
+
+City (1) ---- (*) Alert
+
+A city can have multiple alerts.
+
