@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WeatherAlertTracker.Application.DTOs.Cities;
 using WeatherAlertTracker.Application.Interfaces;
+using WeatherAlertTracker.API.Helpers;
 
 namespace WeatherAlertTracker.API.Controllers;
 
@@ -27,7 +28,9 @@ public class CitiesController : ControllerBase
         return CreatedAtAction(
             nameof(GetById),
             new { id = city.Id },
-            city);
+            ApiResponseFactory.Success(
+                city,
+                "City created successfully."));
     }
 
 
@@ -38,7 +41,10 @@ public class CitiesController : ControllerBase
     {
         var cities = await _cityService.GetAllAsync();
 
-        return Ok(cities);
+        return Ok(
+            ApiResponseFactory.Success(
+                cities,
+                "Cities retrieved successfully."));
     }
 
 
@@ -56,7 +62,10 @@ public class CitiesController : ControllerBase
         }
 
 
-        return Ok(city);
+        return Ok(
+            ApiResponseFactory.Success(
+                city,
+                "City retrieved successfully."));
     }
 
 

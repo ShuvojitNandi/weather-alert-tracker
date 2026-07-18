@@ -1,22 +1,29 @@
 using WeatherAlertTracker.Application.DTOs.Cities;
 using WeatherAlertTracker.Application.Interfaces;
 using WeatherAlertTracker.Domain.Entities;
+using Microsoft.Extensions.Logging;
 
 namespace WeatherAlertTracker.Application.Services;
 
 public class CityService : ICityService
 {
     private readonly ICityRepository _cityRepository;
+    private readonly ILogger<CityService> _logger;
 
 
-    public CityService(ICityRepository cityRepository)
+    public CityService(ICityRepository cityRepository,ILogger<CityService> logger)
     {
         _cityRepository = cityRepository;
+        _logger = logger;
     }
 
 
     public async Task<CityResponse> CreateAsync(CreateCityRequest request)
     {
+        _logger.LogInformation(
+            "Creating city {CityName}",
+            request.Name);
+
         var city = new City
         {
             Id = Guid.NewGuid(),
@@ -30,6 +37,10 @@ public class CityService : ICityService
 
 
         await _cityRepository.AddAsync(city);
+
+        _logger.LogInformation(
+            "City created successfully. CityId: {CityId}",
+            city.Id);
 
 
         return MapToResponse(city);
