@@ -60,4 +60,14 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+app.MapGet("/weather-test",
+    async (WeatherClient weatherClient) =>
+{
+    var weather = await weatherClient.GetCurrentWeatherAsync(
+        47.5615,
+        -52.7126);
+
+    return Results.Ok(weather);
+});
+
 app.Run();
