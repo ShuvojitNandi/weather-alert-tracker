@@ -34,8 +34,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<ICityRepository, CityRepository>();
+builder.Services.AddScoped<IAlertRepository, AlertRepository>();
 
 builder.Services.AddScoped<ICityService, CityService>();
+builder.Services.AddScoped<IAlertService, AlertService>();
 
 builder.Services.AddScoped<ForecastService>();
 
