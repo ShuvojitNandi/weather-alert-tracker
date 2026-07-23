@@ -52,6 +52,8 @@ public class CityRepository : ICityRepository
 
     public async Task<City?> GetByIdAsync(Guid id)
     {
+        _logger.LogInformation("Retrieving city {CityId}", id);
+        
         return await _context.Cities
             .FirstOrDefaultAsync(c => c.Id == id);
     }

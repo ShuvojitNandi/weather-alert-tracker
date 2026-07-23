@@ -11,7 +11,7 @@ using WeatherAlertTracker.Application.DTOs.Cities;
 using WeatherAlertTracker.Application.Validators;
 
 using WeatherAlertTracker.API.Middleware;
-using WeatherAlertTracker.Infrastructure.Weather;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,7 +36,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ICityRepository, CityRepository>();
 
 builder.Services.AddScoped<ICityService, CityService>();
-builder.Services.AddHttpClient<WeatherClient>(client =>
+
+builder.Services.AddScoped<ForecastService>();
+
+builder.Services.AddHttpClient<IWeatherClient, WeatherClient>(client =>
 {
     client.BaseAddress = new Uri(
         builder.Configuration["WeatherApi:BaseUrl"]!);
@@ -61,7 +64,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.MapGet("/weather-test",
-    async (WeatherClient weatherClient) =>
+    async (IWeatherClient weatherClient) =>
 {
     var weather = await weatherClient.GetCurrentWeatherAsync(
         47.5615,

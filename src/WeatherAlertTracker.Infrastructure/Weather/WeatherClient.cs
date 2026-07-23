@@ -1,10 +1,9 @@
 using System.Text.Json;
-using WeatherAlertTracker.Infrastructure.Weather.Models;
-
-namespace WeatherAlertTracker.Infrastructure.Weather;
 using Microsoft.Extensions.Logging;
+using WeatherAlertTracker.Application.DTOs.Weather;
+using WeatherAlertTracker.Application.Interfaces;
 
-public class WeatherClient
+public class WeatherClient : IWeatherClient
 {
     private readonly HttpClient _httpClient;
     private readonly ILogger<WeatherClient> _logger;

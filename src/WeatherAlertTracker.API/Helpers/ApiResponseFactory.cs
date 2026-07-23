@@ -15,4 +15,9 @@ public static class ApiResponseFactory
             Data = data
         };
     }
+
+    internal static object? Error(string v, int status404NotFound)
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using WeatherAlertTracker.Application.DTOs.Cities;
+using WeatherAlertTracker.Application.DTOs.Forecast;
 using WeatherAlertTracker.Application.Interfaces;
 using WeatherAlertTracker.API.Helpers;
+using WeatherAlertTracker.Application.Services;
 
 namespace WeatherAlertTracker.API.Controllers;
 
@@ -10,11 +12,13 @@ namespace WeatherAlertTracker.API.Controllers;
 public class CitiesController : ControllerBase
 {
     private readonly ICityService _cityService;
+    private readonly ForecastService _forecastService;
 
 
-    public CitiesController(ICityService cityService)
+    public CitiesController(ICityService cityService, ForecastService forecastService)
     {
         _cityService = cityService;
+        _forecastService = forecastService;
     }
 
 
@@ -70,6 +74,27 @@ public class CitiesController : ControllerBase
 
 
 
+    // GET: api/cities/{id}/forecast
+    [HttpGet("{id}/forecast")]
+    public async Task<ActionResult<ForecastResponse>> GetForecast(Guid id)
+    {
+        var forecast = await _forecastService.GetForecastAsync(id);
+
+        if (forecast is null)
+        {
+            return NotFound(
+                ApiResponseFactory.Error(
+                    "City not found",
+                    StatusCodes.Status404NotFound));
+        }
+
+        return Ok(
+            ApiResponseFactory.Success(
+                forecast,
+                "Forecast retrieved successfully."));
+    }
+
+
     // DELETE: api/cities/{id}
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(Guid id)
@@ -78,4 +103,6 @@ public class CitiesController : ControllerBase
 
         return NoContent();
     }
+
+    
 }

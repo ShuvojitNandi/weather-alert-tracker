@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace WeatherAlertTracker.Infrastructure.Weather.Models;
+namespace WeatherAlertTracker.Application.DTOs.Weather;
 
 public class CurrentWeatherDto
 {
