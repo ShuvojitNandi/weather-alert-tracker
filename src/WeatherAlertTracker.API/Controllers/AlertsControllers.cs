@@ -38,7 +38,7 @@ public class AlertsController : ControllerBase
 
     // GET: api/alerts
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<AlertSummaryResponse>>> GetAll()
+    public async Task<IActionResult> GetAll()
     {
         var alerts = await _alertService.GetAllAsync();
 
@@ -52,19 +52,17 @@ public class AlertsController : ControllerBase
 
     // GET: api/alerts/{id}
     [HttpGet("{id}")]
-    public async Task<ActionResult<AlertResponse>> GetById(Guid id)
+    public async Task<IActionResult> GetById(Guid id)
     {
         var alert = await _alertService.GetByIdAsync(id);
 
-
-        if(alert == null)
+        if (alert == null)
         {
             return NotFound(
                 ApiResponseFactory.Error(
-                    "Alert not found",
-                    StatusCodes.Status404NotFound));
+                    404,
+                    "Alert not found."));
         }
-
 
         return Ok(
             ApiResponseFactory.Success(
@@ -80,6 +78,8 @@ public class AlertsController : ControllerBase
     {
         await _alertService.DeleteAsync(id);
 
-        return NoContent();
+        return Ok(
+            ApiResponseFactory.Success(
+                message: "Alert deleted successfully."));
     }
 }

@@ -20,4 +20,14 @@ public static class ApiResponseFactory
     {
         throw new NotImplementedException();
     }
+
+    internal static object? Error(int v1, string v2)
+    {
+        throw new NotImplementedException();
+    }
+
+    internal static object? Success(string message)
+    {
+        throw new NotImplementedException();
+    }
 }

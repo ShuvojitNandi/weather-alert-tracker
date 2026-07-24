@@ -4,9 +4,11 @@ namespace WeatherAlertTracker.Application.Interfaces;
 
 public interface IAlertRepository
 {
-    Task<Alert> AddAsync(Alert alert);
+    Task AddAsync(Alert alert);
 
     Task<IEnumerable<Alert>> GetAllAsync();
+
+    Task<IEnumerable<Alert>> GetActiveAlertsAsync();
 
     Task<Alert?> GetByIdAsync(Guid id);
 

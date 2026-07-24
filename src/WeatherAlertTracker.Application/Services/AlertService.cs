@@ -62,6 +62,8 @@ public class AlertService : IAlertService
         return MapToResponse(alert);
     }
 
+    
+
 
 
     public async Task<IEnumerable<AlertSummaryResponse>> GetAllAsync()
@@ -71,9 +73,10 @@ public class AlertService : IAlertService
         return alerts.Select(a => new AlertSummaryResponse
         {
             Id = a.Id,
-            CityId = a.CityId,
+            City = a.City.Name,
             WeatherType = a.WeatherType,
             Threshold = a.Threshold,
+            Email = a.Email,
             IsActive = a.IsActive
         });
     }
@@ -90,7 +93,16 @@ public class AlertService : IAlertService
         }
 
 
-        return MapToResponse(alert);
+        return new AlertResponse
+        {
+            Id = alert.Id,
+            CityId = alert.CityId,
+            WeatherType = alert.WeatherType,
+            Threshold = alert.Threshold,
+            Email = alert.Email,
+            IsActive = alert.IsActive,
+            CreatedAt = alert.CreatedAt
+        };
     }
 
 
@@ -101,8 +113,7 @@ public class AlertService : IAlertService
 
         if(alert == null)
         {
-            throw new InvalidOperationException(
-                "Alert not found.");
+            throw new KeyNotFoundException("Alert not found.");
         }
 
 

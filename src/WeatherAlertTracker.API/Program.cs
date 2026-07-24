@@ -4,6 +4,7 @@ using WeatherAlertTracker.Infrastructure.Data;
 using WeatherAlertTracker.Application.Interfaces;
 using WeatherAlertTracker.Application.Services;
 using WeatherAlertTracker.Infrastructure.Repositories;
+using WeatherAlertTracker.Application.BackgroundServices;
 
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -38,6 +39,8 @@ builder.Services.AddScoped<IAlertRepository, AlertRepository>();
 
 builder.Services.AddScoped<ICityService, CityService>();
 builder.Services.AddScoped<IAlertService, AlertService>();
+builder.Services.AddScoped<IWeatherAlertEvaluator, WeatherAlertEvaluator>();
+builder.Services.AddHostedService<WeatherAlertMonitorService>();
 
 builder.Services.AddScoped<ForecastService>();
 
